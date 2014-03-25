@@ -20,7 +20,7 @@ $max_servers = 2;            # num of pre-forked children (2..15 is common), -m
 $daemon_user  = 'amavis';     # (no default;  customary: vscan or amavis), -u
 $daemon_group = 'amavis';     # (no default;  customary: vscan or amavis), -g
 
-$mydomain = '<%= amavisdDomain %>';   # a convenient default for other settings
+$mydomain = '<%= @amavisdDomain %>';   # a convenient default for other settings
 
 $MYHOME = '/var/spool/amavisd';   # a convenient default for other settings, -H
 $TEMPBASE = "$MYHOME/tmp";   # working directory, needs to exist, -T
@@ -41,7 +41,7 @@ $pid_file  = "/var/run/amavisd/amavisd.pid";   # -P
 #                   10.0.0.0/8 172.16.0.0/12 192.168.0.0/16 );
 
 @mynetworks = qw( 127.0.0.0/8 [::1] [FE80::]/10 [FEC0::]/10 );
-                  
+
 
 
 $log_level = 1;              # verbosity 0..5, -d
@@ -119,7 +119,7 @@ $defang_by_ccat{+CC_BADH.",6"} = 1;  # header field syntax error
 # OTHER MORE COMMON SETTINGS (defaults may suffice):
 
 # $myhostname = 'host.example.com';  # must be a fully-qualified domain name!
-$myhostname = '<%= fqdn %>';
+$myhostname = '<%= @fqdn %>';
 
 # $notify_method  = 'smtp:[127.0.0.1]:10025';
 # $forward_method = 'smtp:[127.0.0.1]:10025';  # set to undef with milter!
