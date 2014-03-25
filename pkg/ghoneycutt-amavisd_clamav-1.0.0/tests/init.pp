@@ -1,1 +1,0 @@
-include amavisd_clamav
