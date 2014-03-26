@@ -12,10 +12,9 @@ class amavisd_clamav {
 
     include spamassassin
 
-    package { 
+    package {
         "amavisd-new":;
         "clamav":;
-        "clamav-update":;
         "lha":;
         "pax":;
         "ripole":;
@@ -30,14 +29,19 @@ class amavisd_clamav {
             notify  => Service["amavisd"];
         "/etc/freshclam.conf":
             source  => "puppet:///modules/amavisd_clamav/freshclam.conf",
-            require => Package["clamav-update"];
+            require => Package["clamav"];
         "/etc/sysconfig/freshclam":
             source  => "puppet:///modules/amavisd_clamav/freshclam.sysconfig",
-            require => Package["clamav-update"];
+            require => Package["clamav"];
         "/etc/cron.d/clamav-update":
             mode    => 600,
             source  => "puppet:///modules/amavisd_clamav/cron.d-clamav-update",
-            require => Package["clamav-update"];
+            require => Package["clamav"];
+        "/var/log/freshclam.log":
+            ensure => file,
+            owner => 'clam',
+            group => 'clam',
+            require => Package['clamav'];
     } # file
 
     service {
@@ -48,7 +52,7 @@ class amavisd_clamav {
         "clamd.amavisd":
             enable  => true,
             ensure  => running,
-            require => Package["clamav"],
+            require => Package["amavisd-new"],
             before  => Service["amavisd"];
     } # service
 
