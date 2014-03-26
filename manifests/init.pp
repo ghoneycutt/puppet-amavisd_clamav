@@ -8,7 +8,11 @@
 # Requires:
 #   class spamassassin
 #
-class amavisd_clamav {
+class amavisd_clamav(
+  $max_servers = 2,
+  $enable_dkim_verification = 1,
+  $amavisdDomain = $amavisdDomain  # Support legacy global $amavisdDomain
+) {
 
     include spamassassin
 
